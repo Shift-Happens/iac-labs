@@ -14,7 +14,10 @@ permissions:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
     defaults:
       run:
         working-directory: ./example-app
@@ -123,9 +126,7 @@ jobs:
       with:
         path: /home/runner/work/iac-labs/iac-labs/example-app/.venv
         key: ${{ runner.os }}-venv
-    - name: Run Sec
-      run: poetry run task security
-    # - name: Run tests
-    #   run: poetry run task test
+    - name: Run tests
+      run: poetry run task test
 
 
