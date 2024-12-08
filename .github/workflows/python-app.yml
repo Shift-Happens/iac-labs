@@ -57,8 +57,20 @@ jobs:
     - name: Run Lint
       run: poetry run task lint
   
-    # - name: Run Format
-    #   run: poetry run task formatter
+  formatter:
+    runs-on: ubuntu-latest
+    needs: build
+    defaults:
+      run:
+        working-directory: ./example-app
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up Python 3.11
+      uses: actions/setup-python@v3
+      with:
+        python-version: "3.11"
+    - name: Run Format
+      run: poetry run task formatter
     # - name: Run Sec
     #   run: poetry run task security
     # - name: Run tests
